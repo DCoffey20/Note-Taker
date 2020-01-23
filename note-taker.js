@@ -4,7 +4,7 @@ const fs = require("fs");
 
 let app = express();
 let data = JSON.parse(fs.readFileSync("./db/db.json"))
-let id = [];
+let idArray = [];
 // let i = 0;
 let counter = 0;
 let j = 0;
@@ -26,7 +26,7 @@ app.get("/notes", function (req, res) {
 // API GET, POST, and Delete
 app.get("/api/notes", function (req, res) {
     res.json(data);
-    id = data.map(data => data.id)
+    idArray = data.map(data => data.id)
     // console.log(data)
 })
 app.post("/api/notes", function (req, res) {
@@ -37,15 +37,15 @@ app.post("/api/notes", function (req, res) {
         // data.id =1;
         counter = req.body;
         counter.id = 1;
-        id.push(counter.id);
+        idArray.push(counter.id);
         // console.log(id);
     } else if (data.length > 0) {
         // i = data.length - 1;
         counter = req.body;
-        j = Math.max(...id);
+        j = Math.max(...idArray);
         j++;
         counter.id = j;
-        id.push(counter.id);
+        idArray.push(counter.id);
         // console.log(id);
         // console.log(counter);
     };
@@ -54,15 +54,24 @@ app.post("/api/notes", function (req, res) {
     fs.writeFile("./db/db.json", JSON.stringify(data), "utf8", (err, data) => { if (err) throw err })
 
 })
-app.delete("/api/notes/:id", function(req, res){
+app.delete("/api/notes/:id", function (req, res) {
     // console.log(req.params.id);
     // let del = req.params.id -1;
-    let del = req.params.id;
-    
-    
-    data.splice(del,1);
-    console.log(data);
+    let del = parseInt(req.params.id);
+    for (let k = 0; k < data.length; k++) {
+        // console.log(del);
+        // console.log(data[k].id);
+        if (del === data[k].id) {
+            data.splice(k, 1);
+            // console.log(k)
+        };
+    };
 
+    // data.splice(del,1);
+    // console.log(data[0].id);
+    // console.log(del)
+    // console.log(data)
+    fs.writeFile("./db/db.json", JSON.stringify(data), "utf8", (err, data) => { if (err) throw err })
 })
 
 app.listen(PORT, function () {
