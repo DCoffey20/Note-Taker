@@ -2,6 +2,6 @@
 
 # Screenshots
 
-![Day Planner](./public/assets/Screenshot.PNG "Auto Updating Current Hour")
+![Note Taker](./public/assets/Screenshot.PNG "Note Taker Home Page")
 
-![Day Planner](./public/assets/Screenshot1.PNG "Auto Updating Current Day")
+![Note Taker](./public/assets/Screenshot1.PNG "Note Taker Displaying Stored Notes")
